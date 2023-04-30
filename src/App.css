@@ -1,5 +1,5 @@
 .App {
-	text-align: right;
+	text-align: center;
 }
 
 .App-header {
@@ -23,4 +23,86 @@
 
 .small {
 	font-size: 0.75rem;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+li {
+	display: flex;
+	/* justify-content: space-between; */
+	/* align-items: center; */
+	/* margin-bottom: 10px; */
+}
+
+li button {
+	margin-left: 10px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input {
+	margin-bottom: 10px;
+	padding: 5px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+}
+
+button {
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: #fff;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #0062cc;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+li button {
+	margin-left: 10px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input {
+	margin-bottom: 10px;
+	padding: 5px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+}
+
+button {
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: #fff;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #0062cc;
 }
