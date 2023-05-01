@@ -54,19 +54,24 @@ function App() {
 	};
 
 	return (
-		<div>
+		<div className="top-div">
 			<h1>Users</h1>
 			<ul>
+				{/* <label>Name Edit Delete</label> */}
 				{users.map((user) => (
 					<li key={user.id}>
 						{user.name} ({user.email}){" "}
 						<button onClick={() => handleEditUser(user.id)}>Edit</button>{" "}
-						<button onClick={() => handleDeleteUser(user.id)}>Delete</button>
+						<button
+							className="delete-button"
+							onClick={() => handleDeleteUser(user.id)}>
+							Delete
+						</button>
 					</li>
 				))}
 			</ul>
 			<h2>{selectedUser ? "Edit User" : "Add User"}</h2>
-			<div>
+			<div className="last-div">
 				<label>Name:</label>
 				<input
 					type="text"
@@ -74,7 +79,7 @@ function App() {
 					onChange={(e) => setName(e.target.value)}
 				/>
 			</div>
-			<div>
+			<div className="last-div">
 				<label>Email:</label>
 				<input
 					type="text"
@@ -82,7 +87,7 @@ function App() {
 					onChange={(e) => setEmail(e.target.value)}
 				/>
 			</div>
-			<div>
+			<div className="last-div">
 				{selectedUser ? (
 					<button onClick={handleUpdateUser}>Update User</button>
 				) : (

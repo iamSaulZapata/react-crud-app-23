@@ -1,85 +1,54 @@
-.App {
-	text-align: center;
-}
-
-.App-header {
-	background-color: #282c34;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
+* {
+	font-family: serif;
+	font-size: 20px;
+	letter-spacing: 1px;
+	background-color: #1d1d1f;
 	color: white;
 }
 
-.App-link {
-	color: #61dafb;
+h1,
+h2 {
+	font-size: 40px;
+	font-weight: bold;
+	margin-top: 7%;
+	text-align: center;
 }
 
-.heart {
-	color: #ff0000;
+.top-div {
+	padding: 1%;
 }
 
-.small {
-	font-size: 0.75rem;
-}
-
-ul {
-	list-style-type: none;
-	padding: 0;
-}
-
-li {
-	display: flex;
-	/* justify-content: space-between; */
-	/* align-items: center; */
-	/* margin-bottom: 10px; */
-}
-
-li button {
-	margin-left: 10px;
-}
-
-label {
-	display: block;
-	margin-bottom: 5px;
-}
-
-input {
-	margin-bottom: 10px;
-	padding: 5px;
-	border-radius: 3px;
-	border: 1px solid #ccc;
-}
-
-button {
-	padding: 10px 20px;
-	background-color: #007bff;
-	color: #fff;
-	border-radius: 3px;
-	border: none;
-	cursor: pointer;
-}
-
-button:hover {
-	background-color: #0062cc;
-}
-
-ul {
-	list-style-type: none;
-	padding: 0;
-}
-
-li {
-	display: flex;
-	justify-content: space-between;
+.last-div {
 	align-items: center;
-	margin-bottom: 10px;
 }
 
-li button {
-	margin-left: 10px;
+ul {
+	list-style-type: none;
+	padding: 1%;
+	border: 0.5px solid white;
+	background-color: #504b4b;
+
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	border: 0.5px solid white;
+	text-align: left;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 7px;
+	border-radius: 5px;
+
+	padding: 10px 20px;
+	column-gap: 10px;
+}
+
+li:last-child {
+	border-bottom: none;
 }
 
 label {
@@ -92,6 +61,7 @@ input {
 	padding: 5px;
 	border-radius: 3px;
 	border: 1px solid #ccc;
+	cursor: pointer;
 }
 
 button {
@@ -105,4 +75,16 @@ button {
 
 button:hover {
 	background-color: #0062cc;
+}
+
+li button {
+	padding: 5px 10px;
+
+	/* display: flex; */
+	/* align-items: center; */
+	/* justify-content: space-between; */
+}
+
+.last-div {
+	text-align: center;
 }
