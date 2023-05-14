@@ -2,22 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-	const [users, setUsers] = useState([
-		{ id: 1, name: "John", email: "john@example.com" },
-		{ id: 2, name: "Jane", email: "jane@example.com" },
-		{ id: 3, name: "Bob", email: "bob@example.com" },
-	]);
+	const [users, setUsers] = useState(
+		JSON.parse(localStorage.getItem("users")) || [
+			{ id: 1, name: "John", email: "john@example.com" },
+			{ id: 2, name: "Jane", email: "jane@example.com" },
+			{ id: 3, name: "Bob", email: "bob@example.com" },
+		]
+	);
 
 	const [selectedUser, setSelectedUser] = useState(null);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
-
-	useEffect(() => {
-		const savedUsers = localStorage.getItem("users");
-		if (savedUsers) {
-			setUsers(JSON.parse(savedUsers));
-		}
-	}, []);
 
 	useEffect(() => {
 		localStorage.setItem("users", JSON.stringify(users));
@@ -56,20 +51,26 @@ function App() {
 	return (
 		<div className="top-div">
 			<h1>Users</h1>
-			<ul>
-				{/* <label>Name Edit Delete</label> */}
-				{users.map((user) => (
-					<li key={user.id}>
-						{user.name} ({user.email}){" "}
-						<button onClick={() => handleEditUser(user.id)}>Edit</button>{" "}
-						<button
-							className="delete-button"
-							onClick={() => handleDeleteUser(user.id)}>
-							Delete
-						</button>
-					</li>
-				))}
-			</ul>
+			{
+				<ul>
+					{users.map((user) => (
+						<li key={user.id}>
+							{user.name} ({user.email}){" "}
+							<button
+								className="edit-button"
+								onClick={() => handleEditUser(user.id)}>
+								Edit
+							</button>{" "}
+							<button
+								className="delete-button"
+								onClick={() => handleDeleteUser(user.id)}>
+								Delete
+							</button>
+						</li>
+					))}
+				</ul>
+			}
+
 			<h2>{selectedUser ? "Edit User" : "Add User"}</h2>
 			<div className="last-div">
 				<label>Name:</label>
