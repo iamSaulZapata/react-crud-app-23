@@ -1,34 +1,22 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
-// this is conncted to Baserow but it is only displaying it on the console
-const BASE_URL = "https://api.baserow.io/api/database/rows/table/164850/"; // Replace with your own Baserow API URL
-const TABLE_ID = 164850; // Replace with your own Baserow table ID
-const API_KEY = "qBPLIRiewtp4409iD654Ggbt1UIXbSAA"; // Replace with your own Baserow API key
-
 function App() {
-	const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState(
+		JSON.parse(localStorage.getItem("users")) || [
+			{ id: 1, name: "John", email: "john@example.com" },
+			{ id: 2, name: "Jane", email: "jane@example.com" },
+			{ id: 3, name: "Bob", email: "bob@example.com" },
+		]
+	);
+
 	const [selectedUser, setSelectedUser] = useState(null);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 
 	useEffect(() => {
-		const users = async () => {
-			try {
-				const response = await axios.get(`${BASE_URL}${TABLE_ID}/rows/`, {
-					headers: {
-						Authorization: `Token ${API_KEY}`,
-					},
-				});
-				users(response.data.results);
-			} catch (error) {
-				console.error(error);
-			}
-		};
-
-		users();
-	}, []);
+		localStorage.setItem("users", JSON.stringify(users));
+	}, [users]);
 
 	const handleAddUser = () => {
 		const newUser = { id: Date.now(), name, email };
