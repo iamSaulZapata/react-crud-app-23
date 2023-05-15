@@ -2,43 +2,131 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-	const [users, setUsers] = useState(
-		JSON.parse(localStorage.getItem("users")) || [
-			{ id: 1, name: "John", email: "john@example.com" },
-			{ id: 2, name: "Jane", email: "jane@example.com" },
-			{ id: 3, name: "Bob", email: "bob@example.com" },
-		]
-	);
-
+	const [users, setUsers] = useState([]);
 	const [selectedUser, setSelectedUser] = useState(null);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 
+	// This will pull exsiting data from Baserow table 164850
 	useEffect(() => {
-		localStorage.setItem("users", JSON.stringify(users));
-	}, [users]);
+		// Fetch data from Baserow API when the component mounts
+		const fetchData = async () => {
+			try {
+				const response = await fetch(
+					"https://api.baserow.io/api/database/rows/table/164850/?user_field_names=true",
+					{
+						headers: {
+							Authorization: "Token pO7KBdur62JLIM8PoczVMgfUDJNodELU",
+						},
+					}
+				);
+				const data = await response.json();
+				setUsers(data.results);
+				console.log(data);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		fetchData();
+	}, []);
 
-	const handleAddUser = () => {
-		const newUser = { id: Date.now(), name, email };
-		setUsers([...users, newUser]);
-		setName("");
-		setEmail("");
+	const handleAddUser = async () => {
+		try {
+			const response = await fetch(
+				"https://api.baserow.io/api/database/rows/table/164850/?user_field_names=true",
+				{
+					method: "POST",
+					headers: {
+						Authorization: "Token pO7KBdur62JLIM8PoczVMgfUDJNodELU",
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ name, email }),
+				}
+			);
+			if (response.ok) {
+				const data = await response.json();
+				setUsers([...users, data]);
+				setName("");
+				setEmail("");
+			} else {
+				console.error("Failed to add user.");
+			}
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
-	const handleUpdateUser = () => {
-		const updatedUser = { ...selectedUser, name, email };
-		const updatedUsers = users.map((user) =>
-			user.id === selectedUser.id ? updatedUser : user
-		);
-		setUsers(updatedUsers);
-		setSelectedUser(null);
-		setName("");
-		setEmail("");
+	const handleUpdateUser = async () => {
+		try {
+			const userToUpdate = users.find(
+				(user) =>
+					user.name === selectedUser.name && user.email === selectedUser.email
+			);
+			if (!userToUpdate) {
+				console.error("User not found.");
+				return;
+			}
+
+			const response = await fetch(
+				`https://api.baserow.io/api/database/rows/table/164850/${userToUpdate.id}/?user_field_names=true/`,
+				{
+					method: "PATCH",
+					headers: {
+						Authorization: "Token pO7KBdur62JLIM8PoczVMgfUDJNodELU",
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ name, email }),
+				}
+			);
+
+			if (response.ok) {
+				const updatedUsers = users.map((user) => {
+					if (user.id === userToUpdate.id) {
+						return { ...user, name, email };
+					}
+					return user;
+				});
+
+				setUsers(updatedUsers);
+				setName("");
+				setEmail("");
+			} else {
+				console.error("Failed to update user.");
+			}
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
-	const handleDeleteUser = (id) => {
-		const filteredUsers = users.filter((user) => user.id !== id);
-		setUsers(filteredUsers);
+	const handleDeleteUser = async (id) => {
+		try {
+			const userToDelete = users.find((user) => user.id === id);
+			if (!userToDelete) {
+				console.error("User not found.");
+				return;
+			}
+
+			const response = await fetch(
+				`https://api.baserow.io/api/database/rows/table/164850/${userToDelete.id}/`,
+				{
+					method: "DELETE",
+					headers: {
+						Authorization: "Token pO7KBdur62JLIM8PoczVMgfUDJNodELU",
+					},
+				}
+			);
+
+			if (response.ok) {
+				const filteredUsers = users.filter(
+					(user) => user.id !== userToDelete.id
+				);
+				setUsers(filteredUsers);
+			} else {
+				console.error("Failed to delete user.");
+			}
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const handleEditUser = (id) => {
@@ -48,7 +136,6 @@ function App() {
 		setEmail(user.email);
 	};
 
-	// original code below
 	return (
 		<div className="top-div">
 			<h1>Users</h1>
